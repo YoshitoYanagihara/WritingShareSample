@@ -2,7 +2,7 @@
 import { ref } from "vue"
 
 const layerRef = ref()
-
+let nextId = 1
 const writings = []
 
 /**
@@ -23,6 +23,7 @@ const onWrite = (e: MouseEvent) => {
   const element = document.createElementNS("http://www.w3.org/2000/svg", "path")
   element.setAttribute("fill", "none")
   element.setAttribute("class", "pen")
+  element.setAttribute("id", `${nextId++}`)
   element.style.stroke = "#000000"
   element.style.strokeWidth = "8px"
   let d = `M ${e.offsetX},${e.offsetY} `
