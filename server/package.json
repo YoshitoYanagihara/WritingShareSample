@@ -10,6 +10,8 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "websocket": "^1.0.34",
+    "ws": "^8.10.0"
   }
 }
