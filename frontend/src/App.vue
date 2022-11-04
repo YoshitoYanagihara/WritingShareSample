@@ -2,7 +2,7 @@
 </script>
 
 <template lang="pug">
-.root Test
+.root
 </template>
 
 <style lang="sass" scoped>
