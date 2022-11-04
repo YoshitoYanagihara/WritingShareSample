@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import WritingLayer from "./writings/WritingLayer.vue"
 
 const pageCount = ref(1)
 
@@ -23,6 +24,7 @@ const onNextPage = () => {
     PrimeButton(@click="onPrevPage") ←
   .rightButton
     PrimeButton(@click="onNextPage") →
+  WritingLayer
 </template>
 
 <style lang="sass" scoped>
