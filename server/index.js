@@ -1,8 +1,10 @@
 const WebSocketServer = require("ws").Server
 
 const server = new WebSocketServer({ port: 3000 })
+let nextClientId = 1
 
 server.on("connection", socket => {
+  const clientId = nextClientId++
   const broadcast = (data) => {
     server.clients.forEach(s => {
       if (s !== socket) {
@@ -12,6 +14,8 @@ server.on("connection", socket => {
   }
   
   socket.on("message", msg => {
-    broadcast(msg.toString())
+    const data = JSON.parse(msg.toString())
+    data.clientId = clientId
+    broadcast(JSON.stringify(data))
   })
 })
