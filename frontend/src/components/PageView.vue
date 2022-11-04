@@ -11,6 +11,9 @@ const onPrevPage = () => {
   pageCount.value = Math.max(1, pageCount.value - 1)
 }
 
+/**
+ * 次のページへ進む
+ */
 const onNextPage = () => {
   pageCount.value = Math.min(pageCount.value + 1, 10)
 }
