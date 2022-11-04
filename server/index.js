@@ -18,4 +18,8 @@ server.on("connection", socket => {
     data.clientId = clientId
     broadcast(JSON.stringify(data))
   })
+  socket.on("close", () => {
+    broadcast(JSON.stringify({ type: 1, clientId: clientId }))
+  })
+  broadcast(JSON.stringify({ type: 0, clientId: clientId }))
 })

@@ -44,7 +44,7 @@ export class NetworkConnection {
   sendWrite (id: number, d: string): void {
     if (!this.connection) { return }
     this.connection.send(JSON.stringify({
-      type: 0,
+      type: 2,
       id: id,
       d: d,
     }))
@@ -58,7 +58,7 @@ export class NetworkConnection {
     if (!this.connection) { return }
 
     this.connection.send(JSON.stringify({
-      type: 1,
+      type: 3,
       id: id,
     }))
   }
