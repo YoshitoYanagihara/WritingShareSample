@@ -17,6 +17,20 @@ const onPrevPage = () => {
 const onNextPage = () => {
   pageCount.value = Math.min(pageCount.value + 1, 10)
 }
+
+/**
+ * 書き込まれた
+ */
+const onWrite = (id: number, d: string) => {
+  console.log(id, d)
+}
+
+/**
+ * 書き込みが消えた
+ */
+const onErase = (id: number) => {
+  console.log("erase", id)
+}
 </script>
 
 <template lang="pug">
@@ -27,7 +41,7 @@ const onNextPage = () => {
     PrimeButton(@click="onPrevPage") ←
   .rightButton
     PrimeButton(@click="onNextPage") →
-  WritingLayer
+  WritingLayer(@onwrite="onWrite" @onerase="onErase")
 </template>
 
 <style lang="sass" scoped>
