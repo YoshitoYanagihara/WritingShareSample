@@ -16,7 +16,7 @@ export class NetworkConnection {
    */
   connect (): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.connection = new WebSocket("wss://127.0.0.1:3000")
+      this.connection = new WebSocket("ws://127.0.0.1:3000")
       this.connection.onopen = () => {
         resolve()
       }
