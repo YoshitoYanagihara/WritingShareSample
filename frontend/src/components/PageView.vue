@@ -25,14 +25,14 @@ const onNextPage = () => {
  * 書き込まれた
  */
 const onWrite = (id: number, d: string) => {
-  console.log(id, d)
+  connection.sendWrite(id, d)
 }
 
 /**
  * 書き込みが消えた
  */
 const onErase = (id: number) => {
-  console.log("erase", id)
+  connection.sendErase(id)
 }
 
 onMounted(async () => {
