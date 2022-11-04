@@ -16,18 +16,17 @@ const onNextPage = () => {
 </script>
 
 <template lang="pug">
-div
-  .root
-    .page
-      span Page: {{ pageCount }}
-    .leftButton
-      PrimeButton(@click="onPrevPage") ←
-    .rightButton
-      PrimeButton(@click="onNextPage") →
+.pageView
+  .page
+    span Page: {{ pageCount }}
+  .leftButton
+    PrimeButton(@click="onPrevPage") ←
+  .rightButton
+    PrimeButton(@click="onNextPage") →
 </template>
 
 <style lang="sass" scoped>
-.root
+.pageView
   position: relative
   width: 99vw
   height: 95vh
