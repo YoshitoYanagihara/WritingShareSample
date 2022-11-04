@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
+const emits = defineEmits<{
+  (e: "onwrite", id: number, d: string): void
+  (e: "onerase", id: number): void
+}>()
+
 const layerRef = ref()
 let nextId = 1
 const writings = []
@@ -20,10 +25,11 @@ const onMouseDown = (e: MouseEvent) => {
  * ペン
  */
 const onWrite = (e: MouseEvent) => {
+  const id = nextId++
   const element = document.createElementNS("http://www.w3.org/2000/svg", "path")
   element.setAttribute("fill", "none")
   element.setAttribute("class", "pen")
-  element.setAttribute("id", `${nextId++}`)
+  element.setAttribute("id", `${id}`)
   element.style.stroke = "#000000"
   element.style.strokeWidth = "8px"
   let d = `M ${e.offsetX},${e.offsetY} `
@@ -37,6 +43,8 @@ const onWrite = (e: MouseEvent) => {
   }
 
   const onMouseUp = () => {
+    emits("onwrite", id, d)
+    
     document.removeEventListener("mousemove", onMouseMove)
     document.removeEventListener("mouseup", onMouseUp)
   }
@@ -53,7 +61,9 @@ const onErase = (e: MouseEvent) => {
     const target = e.target as HTMLElement
     const className = target.getAttribute("class")
     if (className === "pen") {
+      const id = Number(target.getAttribute("id"))
       layerRef.value.removeChild(target)
+      emits("onerase", id)
     }
   }
 
