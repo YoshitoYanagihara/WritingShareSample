@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
 import WritingLayer from "./writings/WritingLayer.vue"
+import OtherWritingLayer from "./writings/OtherWritingLayer.vue"
 import { NetworkConnection } from "@/modules/NetworkConnection"
 
 const pageCount = ref(1)
