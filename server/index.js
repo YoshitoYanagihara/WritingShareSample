@@ -12,6 +12,6 @@ server.on("connection", socket => {
   }
   
   socket.on("message", msg => {
-    broadcast(msg)
+    broadcast(msg.toString())
   })
 })
