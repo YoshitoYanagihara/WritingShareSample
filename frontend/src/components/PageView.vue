@@ -21,9 +21,9 @@ div
     .page
       span Page: {{ pageCount }}
     .leftButton
-      PrimeButton(@click="onPrevPage")
+      PrimeButton(@click="onPrevPage") ←
     .rightButton
-      PrimeButton(@click="onNextPage")
+      PrimeButton(@click="onNextPage") →
 </template>
 
 <style lang="sass" scoped>
