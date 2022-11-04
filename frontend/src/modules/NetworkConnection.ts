@@ -1,4 +1,10 @@
 /**
+ * ネットワークイベントリスナインタフェース
+ */
+export interface INetworkEventListener {
+}
+
+/**
  * ネットワーク接続クラス
  */
 export class NetworkConnection {
