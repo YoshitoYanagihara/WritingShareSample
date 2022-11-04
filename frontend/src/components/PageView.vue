@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import WritingLayer from "./writings/WritingLayer.vue"
+import { NetworkConnection } from "@/modules/NetworkConnection"
 
 const pageCount = ref(1)
+const connection = new NetworkConnection()
+const isConnecting = ref(true)
 
 /**
  * 前のページに戻る
@@ -31,17 +34,31 @@ const onWrite = (id: number, d: string) => {
 const onErase = (id: number) => {
   console.log("erase", id)
 }
+
+onMounted(async () => {
+  try {
+    await connection.connect()
+    console.log("Network Connection Success!")
+    isConnecting.value = false
+  } catch (error: any) {
+    alert("Network Error!")
+    console.error(error)
+  }
+})
 </script>
 
 <template lang="pug">
 .pageView
-  .page
-    span Page: {{ pageCount }}
-  .leftButton
-    PrimeButton(@click="onPrevPage") ←
-  .rightButton
-    PrimeButton(@click="onNextPage") →
-  WritingLayer(@onwrite="onWrite" @onerase="onErase")
+  div(v-if="!isConnecting")
+    .page
+      span Page: {{ pageCount }}
+    .leftButton
+      PrimeButton(@click="onPrevPage") ←
+    .rightButton
+      PrimeButton(@click="onNextPage") →
+    WritingLayer(@onwrite="onWrite" @onerase="onErase")
+  .connecting(v-else)
+    span Connecting...
 </template>
 
 <style lang="sass" scoped>
@@ -50,7 +67,7 @@ const onErase = (id: number) => {
   width: 99vw
   height: 95vh
 
-  .page
+  .page, .connecting
     display: flex
     justify-content: center
     align-items: center
