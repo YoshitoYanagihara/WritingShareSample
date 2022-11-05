@@ -1,19 +1,19 @@
-const WebSocketServer = require("ws").Server
+import { WebSocketServer, type WebSocket, type RawData } from "ws"
 
 const server = new WebSocketServer({ port: 3000 })
 let nextClientId = 1
 
-server.on("connection", socket => {
+server.on("connection", (socket: WebSocket) => {
   const clientId = nextClientId++
-  const broadcast = (data) => {
-    server.clients.forEach(s => {
+  const broadcast = (data: string) => {
+    server.clients.forEach((s: WebSocket) => {
       if (s !== socket) {
         s.send(data)
       }
     })
   }
   
-  socket.on("message", msg => {
+  socket.on("message", (msg: RawData) => {
     const data = JSON.parse(msg.toString())
     data.clientId = clientId
     broadcast(JSON.stringify(data))
