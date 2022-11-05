@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "module": "es2015",
+    "module": "CommonJS",
     "strict": true,
     "moduleResolution": "node"
-  }
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules"]
 }
