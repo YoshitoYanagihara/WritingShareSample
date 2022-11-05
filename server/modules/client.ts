@@ -24,7 +24,6 @@ class Client {
    * @param data 送信するデータ
    */
   send (data: any): void {
-    data.clientId = this.id
     const json = JSON.stringify(data)
     this.socket.send(json)
   }
@@ -35,7 +34,8 @@ class Client {
    */
   private recv (data: RawData): void {
     const obj = JSON.parse(data.toString())
-    console.log(obj)  // TODO: ハンドリングする仕組みの実装
+    obj.clientId = this.id
+    this.broadcast(obj)
   }
   
   /**
