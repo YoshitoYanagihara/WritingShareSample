@@ -16,7 +16,7 @@ class Client {
     this.socket = socket
     this.id = id
     this.broadcastObject = broadcastObject
-    this.socket.on("message", this.recv)
+    this.socket.on("message", this.recv.bind(this))
   }
 
   /**
