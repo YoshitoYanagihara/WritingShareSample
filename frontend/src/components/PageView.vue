@@ -3,9 +3,21 @@ import { ref, onMounted } from "vue"
 import WritingLayer from "./writings/WritingLayer.vue"
 import OtherWritingLayer from "./writings/OtherWritingLayer.vue"
 import { NetworkConnection } from "@/modules/NetworkConnection"
+import type { INetworkEventListener } from "@/modules/NetworkConnection"
+
+const networkEvents: INetworkEventListener = {
+  onConnected: function (clientId: number): void {
+  },
+  onDisconnected: function (clientId: number): void {
+  },
+  wrote: function (clientId: number, writingId: number, d: string): void {
+  },
+  erased: function (clientId: number, writingId: number): void {
+  }
+}
 
 const pageCount = ref(1)
-const connection = new NetworkConnection()
+const connection = new NetworkConnection(networkEvents)
 const isConnecting = ref(true)
 
 /**

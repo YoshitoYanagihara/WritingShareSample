@@ -2,6 +2,32 @@
  * ネットワークイベントリスナインタフェース
  */
 export interface INetworkEventListener {
+  /**
+   * 接続された
+   * @param clientId クライアントID
+   */
+  onConnected (clientId: number): void
+
+  /**
+   * 切断された
+   * @param clientId クライアントID
+   */
+  onDisconnected (clientId: number): void
+
+  /**
+   * 書き込まれた
+   * @param clientId クライアントID
+   * @param writingId 書き込みID
+   * @param d 書き込み
+   */
+  wrote (clientId: number, writingId: number, d: string): void
+
+  /**
+   * 書き込みが削除された
+   * @param clientId クライアントID
+   * @param writingId 書き込みID
+   */
+  erased (clientId: number, writingId: number): void
 }
 
 /**
@@ -9,12 +35,14 @@ export interface INetworkEventListener {
  */
 export class NetworkConnection {
   private connection: WebSocket | null
+  private eventListener: INetworkEventListener
 
   /**
    * コンストラクタ
    */
-  constructor () {
+  constructor (eventListener: INetworkEventListener) {
     this.connection = null
+    this.eventListener = eventListener
   }
 
   /**
@@ -31,7 +59,25 @@ export class NetworkConnection {
         reject(e)
       }
       this.connection.onmessage = (e: MessageEvent) => {
-        console.log(e.data)
+        const data = JSON.parse(e.data)
+        switch (data.type) {
+          case 0:
+            // 接続
+            this.eventListener.onConnected(data.clientId)
+            break
+          case 1:
+            // 切断
+            this.eventListener.onDisconnected(data.clientId)
+            break
+          case 2:
+            // 書き込まれた
+            this.eventListener.wrote(data.clientId, data.id, data.d)
+            break
+          case 3:
+            // 削除された
+            this.eventListener.erased(data.clientId, data.id)
+            break
+        }
       }
     })
   }
