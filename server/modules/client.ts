@@ -88,7 +88,7 @@ export class ClientManager implements IBroadcast {
       this.broadcast(id, { type: 1, clientId: id })
     })
     
-    client.broadcast({ type: 0 })
+    client.broadcast({ type: 0, clientId: id })
   }
 
   /**
