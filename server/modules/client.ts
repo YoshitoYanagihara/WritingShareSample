@@ -91,7 +91,7 @@ export class ClientManager implements IBroadcast {
     client.broadcast({ type: 0, clientId: id })
     this.list.forEach((c: Client, cid: number) => {
       if (c !== client) {
-        c.send({ type: 0, clientId: cid })
+        client.send({ type: 0, clientId: cid })
       }
     })
   }
