@@ -1,18 +1,25 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue"
+import { ref, reactive, onMounted } from "vue"
 import WritingLayer from "./writings/WritingLayer.vue"
 import OtherWritingLayer from "./writings/OtherWritingLayer.vue"
 import { NetworkConnection } from "@/modules/NetworkConnection"
 import type { INetworkEventListener } from "@/modules/NetworkConnection"
 
+const others: Map<number, Map<number, string>> = reactive(new Map<number, Map<number, string>>())
+
 const networkEvents: INetworkEventListener = {
   onConnected: function (clientId: number): void {
+    const map = new Map<number, string>()
+    others.set(clientId, map)
   },
   onDisconnected: function (clientId: number): void {
+    others.delete(clientId)
   },
   wrote: function (clientId: number, writingId: number, d: string): void {
+    others.get(clientId)!.set(writingId, d)
   },
   erased: function (clientId: number, writingId: number): void {
+    others.get(clientId)!.delete(writingId)
   }
 }
 
@@ -70,6 +77,11 @@ onMounted(async () => {
     .rightButton
       PrimeButton(@click="onNextPage") →
     WritingLayer(@onwrite="onWrite" @onerase="onErase")
+    OtherWritingLayer(
+      v-for="kv in others"
+      :key="kv[0]"
+      :writings="kv[1]"
+    )
   .connecting(v-else)
     span Connecting...
 </template>
